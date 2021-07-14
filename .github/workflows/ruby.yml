@@ -39,5 +39,7 @@ jobs:
       run: bundle install
     - name: Setup the stack
       run: ./bin/setup
+    - name: Setup database
+      run: bundle exec rake db:setup
     - name: Run tests
       run: bundle exec rake
