@@ -5,7 +5,7 @@ services:
   db:
     image: postgres:13.3
     volumes:
-      - db_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${DATABASE_PASS}
     ports:
