@@ -9,19 +9,18 @@ name: Ruby
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   test:
     env:
-      PEATIO_ENDPOINT: http://peatio.host
-      VALERA_REDIS_URL: redis://localhost:6379/0
       REDIS_HOST: redis
       # The default Redis port
       REDIS_PORT: 6379
       RAILS_ENV: test
+      DATABASE_ADAPTER: postgresql
       DATABASE_USER: postgres
       DATABASE_PASS: postgres
       JWT_PUBLIC_KEY: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUR3d0RRWUpLb1pJaHZjTkFRRUJCUUFES3dBd0tBSWhBTDBlNnNhMFc4SzN1WS8rRVlrRXdxemo4UTZxc2lwcgp0R1dtYjhPVzhZcDdBZ01CQUFFPQotLS0tLUVORCBQVUJMSUMgS0VZLS0tLS0K
@@ -63,20 +62,3 @@ jobs:
       run: bundle exec rake db:setup
     - name: Run tests
       run: bundle exec rake
-  rubocop:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['2.7']
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Bundle install
-      run: bundle install
-    - name: Rubocop
-      run: bundle exec rubocop
